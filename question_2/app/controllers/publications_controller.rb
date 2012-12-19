@@ -26,21 +26,23 @@ class PublicationsController < ApplicationController
   def add_author
     @publication = Publication.find params[:id]
 
+    notice = "#{@publication.title}の著者にあなたを追加できませんでした。"
     if @publication.users << current_user
-      redirect_to @publication, notice: "#{@publication.title}の著者にあなたを追加しました"
-    else
-      redirect_to @publication, notice: "#{@publication.title}の著者にあなたを追加できませんでした。"
+      notice = "#{@publication.title}の著者にあなたを追加しました"
     end
+
+    redirect_to @publication, notice: notice
   end
 
   def add_skilltag
     @publication = Publication.find params[:id]
     @skilltag = Skilltag.where(name: params[:skilltag]).first_or_create!
 
+    notice = "#{@publication.title}のスキルに#{@skilltag.name}を追加できませんでした"
     if @publication.skilltags << @skilltag
-      redirect_to @publication, notice: "#{@publication.title}のスキルに#{@skilltag.name}を追加しました"
-    else
-      redirect_to @publication, notice: "#{@publication.title}のスキルに#{@skilltag.name}を追加できませんでした"
+      notice = "#{@publication.title}のスキルに#{@skilltag.name}を追加しました"
     end
+
+    redirect_to @publication, notice: notice
   end
 end

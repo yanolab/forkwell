@@ -1,8 +1,7 @@
 # coding: utf-8
 class SkilltagsController < ApplicationController
   def show
-    @skilltag = Skilltag.find_by_name params[:name]
-    raise ActiveRecord::RecordNotFound if @skilltag.nil?
+    @skilltag = Skilltag.find_by_name! params[:name]
   end
 
   # POST /users/:user_id/skilltags
@@ -12,10 +11,11 @@ class SkilltagsController < ApplicationController
 
     return redirect_to @user, notice: "すでに登録済みです" if @user.skilltags.include? @skilltag
 
+    notice = "#{@skilltag.name}を登録できませんでした"
     if @user.skilltags << @skilltag
-      redirect_to @user, notice: "#{@skilltag.name}を登録しました"
-    else
-      redirect_to @user, notice: "#{@skilltag.name}を登録できませんでした"
+      notice = "#{@skilltag.name}を登録しました"
     end
+
+    redirect_to @user, notice: notice
   end
 end

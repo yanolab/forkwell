@@ -4,9 +4,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :user_signed_in?
 
   def current_user
-    @current_user ||= User.find(session[:current_user])
-  rescue ActiveRecord::RecordNotFound
-    nil
+    @current_user ||= User.find_by_id(session[:current_user])
   end
 
   def user_signed_in?

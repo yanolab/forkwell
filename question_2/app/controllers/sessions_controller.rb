@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
   def logout
     session[:current_user] = nil
-    current_user = nil
+    @current_user = nil
 
     redirect_to root_path
   end

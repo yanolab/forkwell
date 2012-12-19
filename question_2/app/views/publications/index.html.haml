@@ -1,5 +1,5 @@
 - @publications.each do |publication|
   .publication
     %h2= link_to publication.title, publication
-    %p= link_to publication.url.gsub(/https?:\/\//, ''), publication.url
+    %p= link_to publication.url_without_protocol, publication.url
 = paginate @publications
